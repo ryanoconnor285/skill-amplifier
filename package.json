@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/ryanoconnor285/skill-amplifier#readme",
   "dependencies": {
+    "config": "^3.3.1",
     "express": "^4.17.1",
     "mongoose": "^5.10.6"
   },
