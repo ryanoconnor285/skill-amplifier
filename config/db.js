@@ -4,10 +4,10 @@ const db = config.get('mongoURI');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(db);
-    console.log('MongoDB connected successfully.')
+    await mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('Database connected successfully')
   } catch (err) {
-    throw new Error('msg:', err.message);
+    console.error(err.message);
     process.exit(1);
   }
 }
