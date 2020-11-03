@@ -7,7 +7,6 @@ import {
 
 import Landing from './pages/landing/landing.page';
 import Login from './pages/login/login.page';
-import Register from './pages/register/register.page';
 import Navbar from './components/navbar/navbar.component';
 
 function App() {
@@ -17,7 +16,6 @@ function App() {
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
         </Switch>
     </Router>
   );
