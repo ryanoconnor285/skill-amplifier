@@ -33,14 +33,14 @@ function Login() {
   return (
     <div>
       <h1>Login</h1>
-      <form onSubmit={e => handleSubmit()}>
+      <form onSubmit={e => handleSubmit(e)}>
 
         <input 
           type="email" 
           placeholder="Email"
           name="email" 
           value={email} 
-          onChange={e => {handleChange(e)}} 
+          onChange={e => handleChange(e)} 
           required 
         />
 
@@ -49,7 +49,7 @@ function Login() {
           placeholder="Passoword" 
           name="password" 
           value={password} 
-          onChange={e => {handleChange(e)}} 
+          onChange={e => handleChange(e)} 
           required 
         />
 
