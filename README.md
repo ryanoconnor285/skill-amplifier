@@ -1,10 +1,10 @@
 # skill-amplifier
 
-### Getting Started#1
+### Getting Started
 
-### API#2
+### API
 
-#### Prerequisites#1
+#### Prerequisites
 
 - Download and install the latest version of NodeJS https://nodejs.org/en/
 
@@ -22,8 +22,36 @@
   - Make sure to replace username and password with the username and password you created for the database and make sure to replace database name.
   - Note this is not your account username for mongoDB atlas, you need to create a user under the "Database Access" tab. Make sure to give the user read and write permissions.
 
-#### Installation
+#### Installation - server
 
-Install all dependencies by running the following command
+Install all dependencies by running the following command in the root directory.
 
 `$ npm install`
+
+#### Installation - client
+
+Install all dependencies by running the following command in the client directory.
+
+`$ cd client`
+`$ npm install`
+
+#### Startup - server
+
+Start the server by running the following command in the root directory.
+
+`$ npm run start`
+
+#### Startup - client
+
+Start the client by running the following command in the client directory.
+
+`$ cd client`
+`$ npm run start`
+
+### OR
+
+#### Startup - concurrently
+
+Instead of running the server and client separately you can run them concurrently with one command run in the root directory.
+
+`$ npm run dev`
