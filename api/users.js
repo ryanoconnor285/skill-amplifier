@@ -12,7 +12,6 @@ const User = require("../models/User");
 // @route   GET api/users
 // @desc    Test route
 // @access  Public
-
 router.get(
   "/",
   [
