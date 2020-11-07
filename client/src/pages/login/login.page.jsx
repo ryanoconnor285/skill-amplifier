@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { setAlert } from "../../actions/alert";
 import PropTypes from "prop-types";
-import axios from "axios";
+import { login } from "../../actions/auth";
 
-function Login({ setAlert }) {
+function Login({ login, isAuthenticated }) {
   const [formData, setFormData] = useState({
-    email: "roconnor@orangecountync.gov",
-    password: "high-Falcon",
+    email: "",
+    password: "",
   });
 
   const { email, password } = formData;
@@ -19,24 +19,16 @@ function Login({ setAlert }) {
     e.preventDefault();
 
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      const body = JSON.stringify(formData);
-
-      const res = await axios.post("api/auth", body, config);
-      console.log(res);
+      login(formData);
     } catch (err) {
       console.error(err.response.data);
-      setAlert(
-        "An error occurred while submitting the login form. Server responded with a status code of " +
-          err.response.status
-      );
     }
   };
+
+  // Redirect if logged in
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <div>
@@ -67,7 +59,12 @@ function Login({ setAlert }) {
 }
 
 Login.propTypes = {
-  setAlert: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, { setAlert })(Login);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);
