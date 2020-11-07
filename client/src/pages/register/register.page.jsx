@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { setAlert } from "../../actions/alert";
+import { register } from "../../actions/auth";
 import PropTypes from "prop-types";
-import axios from "axios";
 
-function Login({ setAlert }) {
+function Register({ setAlert, register }) {
   const [formData, setFormData] = useState({
-    email: "roconnor@orangecountync.gov",
-    password: "high-Falcon",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
   });
 
-  const { email, password } = formData;
+  const { firstName, lastName, email, password } = formData;
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,16 +21,7 @@ function Login({ setAlert }) {
     e.preventDefault();
 
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      const body = JSON.stringify(formData);
-
-      const res = await axios.post("api/auth", body, config);
-      console.log(res);
+      register({ firstName, lastName, email, password });
     } catch (err) {
       console.error(err.response.data);
       setAlert(
@@ -40,15 +33,28 @@ function Login({ setAlert }) {
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Register</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
+        <input
+          type="text"
+          placeholder="First Name"
+          name="firstName"
+          value={firstName}
+          onChange={(e) => handleChange(e)}
+        />
+        <input
+          type="text"
+          placeholder="Last Name"
+          name="lastName"
+          value={lastName}
+          onChange={(e) => handleChange(e)}
+        />
         <input
           type="email"
           placeholder="Email"
           name="email"
           value={email}
           onChange={(e) => handleChange(e)}
-          required
         />
 
         <input
@@ -57,7 +63,6 @@ function Login({ setAlert }) {
           name="password"
           value={password}
           onChange={(e) => handleChange(e)}
-          required
         />
 
         <button onClick={(e) => handleSubmit(e)}>Submit</button>
@@ -66,8 +71,9 @@ function Login({ setAlert }) {
   );
 }
 
-Login.propTypes = {
+Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
 };
 
-export default connect(null, { setAlert })(Login);
+export default connect(null, { setAlert, register })(Register);
