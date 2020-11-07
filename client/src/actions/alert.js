@@ -16,16 +16,9 @@ export const setAlert = (msg, alertType) => dispatch => {
       id
     }
   });
-}
 
-export const removeAlert = (msg, alertType) => dispatch => {
-  const id = uuidv4();
-  dispatch({
+  setTimeout(() => dispatch({
     type: REMOVE_ALERT,
-    payload: {
-      msg,
-      alertType,
-      id
-    }
-  });
+    payload: id
+  }), 5000)
 }
