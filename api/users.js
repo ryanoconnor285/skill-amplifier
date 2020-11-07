@@ -2,10 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {
-  check,
-  validationResult
-} = require("express-validator");
+const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
 
@@ -26,9 +23,7 @@ router.get(
       });
     }
 
-    const {
-      email
-    } = req.body;
+    const { email } = req.body;
 
     try {
       // Find user by email
@@ -58,8 +53,11 @@ router.post(
     check("firstName", "First name is required.").not().isEmpty(),
     check("lastName", "Last name is required").not().isEmpty(),
     check("email", "Please include a valid email").isEmail(),
-    check("password", "Please enter a password with 6 or more characters").isLength({
-      min: 6
+    check(
+      "password",
+      "Please enter a password with 6 or more characters"
+    ).isLength({
+      min: 6,
     }),
   ],
   async (req, res) => {
@@ -70,12 +68,7 @@ router.post(
       });
     }
 
-    const {
-      firstName,
-      lastName,
-      email,
-      password
-    } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     try {
       let user = await User.findOne({
@@ -84,9 +77,11 @@ router.post(
 
       if (user) {
         return res.status(400).json({
-          errors: [{
-            msg: "User already exists ",
-          }, ],
+          errors: [
+            {
+              msg: "User already exists ",
+            },
+          ],
         });
       }
 
@@ -111,13 +106,14 @@ router.post(
 
       jwt.sign(
         payload,
-        process.env.JWT_SECRET, {
-          expiresIn: 3600
+        process.env.JWT_SECRET,
+        {
+          expiresIn: 3600,
         },
         (err, token) => {
           if (err) throw err;
           res.json({
-            token
+            token,
           });
         }
       );

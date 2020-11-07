@@ -1,26 +1,23 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const auth = require('../middleware/auth');
+const auth = require("../middleware/auth");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {
-  check,
-  validationResult
-} = require("express-validator");
+const { check, validationResult } = require("express-validator");
 
-const User = require('../models/User');
+const User = require("../models/User");
 
 // @route   GET api/auth
 // @desc    Test route
 // @access  Public
 
-router.get('/', auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select("-password");
     res.json(user);
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send('Server Error');
+    console.error(err.message);
+    res.status(500).send("Server Error");
   }
 });
 
@@ -41,12 +38,7 @@ router.post(
       });
     }
 
-    const {
-      firstName,
-      lastName,
-      email,
-      password
-    } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     try {
       let user = await User.findOne({
@@ -55,9 +47,11 @@ router.post(
 
       if (!user) {
         return res.status(400).json({
-          errors: [{
-            msg: "Invalid credentials.",
-          }, ]
+          errors: [
+            {
+              msg: "Invalid credentials.",
+            },
+          ],
         });
       }
 
@@ -66,9 +60,11 @@ router.post(
 
       if (password !== user.password) {
         return res.status(400).json({
-          errors: [{
-            msg: "Invalid credentials.",
-          }]
+          errors: [
+            {
+              msg: "Invalid credentials.",
+            },
+          ],
         });
       }
 
@@ -80,13 +76,14 @@ router.post(
 
       jwt.sign(
         payload,
-        process.env.JWT_SECRET, {
-          expiresIn: 3600
+        process.env.JWT_SECRET,
+        {
+          expiresIn: 3600,
         },
         (err, token) => {
           if (err) throw err;
           res.json({
-            token
+            token,
           });
         }
       );
