@@ -9,8 +9,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <ul>
       <li>
-        <a href="#!">
-          <i className="fas fa-sign-out-alt"></i>{" "}
+        <a onClick={logout} href="#!">
           <span className="hide-sm">Logout</span>
         </a>
       </li>
@@ -20,29 +19,12 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to="/register">Register</Link>
-      </li>
-      <li>
-        <Link to="/register">Register</Link>
+        <Link to="/Login">Login</Link>
       </li>
     </ul>
   );
 
-  return (
-    <div>
-      <ul>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/logout">Logout</Link>
-        </li>
-      </ul>
-    </div>
-  );
+  return <div>{!loading && isAuthenticated ? authLinks : guestLinks}</div>;
 };
 
 Navbar.propTypes = {
