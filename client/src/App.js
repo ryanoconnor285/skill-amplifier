@@ -2,11 +2,14 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Landing from "./pages/landing/landing.page";
+import Dashboard from "./pages/dashboard/dashboard.page";
 import Login from "./pages/login/login.page";
 import Register from "./pages/register/register.page";
 
 import Navbar from "./components/navbar/navbar.component";
 import Alert from "./components/alert/alert.component";
+
+import PrivateRoute from "./components/routing/privateRoute";
 
 //Redux
 import { Provider } from "react-redux";
@@ -29,6 +32,7 @@ const App = () => {
         <Alert />
         <Switch>
           <Route exact path="/" component={Landing} />{" "}
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />{" "}
           <Route exact path="/login" component={Login} />{" "}
           <Route exact path="/register" component={Register} />{" "}
         </Switch>
