@@ -53,6 +53,7 @@ router.post(
     check("firstName", "First name is required.").not().isEmpty(),
     check("lastName", "Last name is required").not().isEmpty(),
     check("email", "Please include a valid email").isEmail(),
+    check("password", "Password is required").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -62,7 +63,14 @@ router.post(
       });
     }
 
-    const { firstName, lastName, email } = req.body;
+    const {
+      employeeNumber,
+      username,
+      firstName,
+      lastName,
+      email,
+      password,
+    } = req.body;
 
     try {
       let user = await User.findOne({
@@ -80,9 +88,12 @@ router.post(
       }
 
       user = new User({
+        employeeNumber,
+        username,
         firstName,
         lastName,
         email,
+        password,
       });
 
       const salt = await bcrypt.genSalt(10);
