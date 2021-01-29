@@ -54,11 +54,9 @@ router.post(
           ],
         });
       }
+      const isMatch = await bcrypt.compare(password, user.password);
 
-      // TODO encrypt passwords stored on MongoDB Atlas
-      // const isMatch = await bcrypt.compare(password, user.password);
-
-      if (password !== user.password) {
+      if (!isMatch) {
         return res.status(400).json({
           errors: [
             {
