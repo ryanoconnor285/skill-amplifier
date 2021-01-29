@@ -39,8 +39,6 @@ router.get(
     } catch (error) {
       console.error(error);
     }
-
-    res.send("User Route");
   }
 );
 
