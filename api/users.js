@@ -53,7 +53,9 @@ router.post(
     check("firstName", "First name is required.").not().isEmpty(),
     check("lastName", "Last name is required").not().isEmpty(),
     check("email", "Please include a valid email").isEmail(),
-    check("password", "Password is required").not().isEmpty(),
+    check("password", "Password must be at least 6 characters").isLength({
+      min: 6,
+    }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -63,14 +65,7 @@ router.post(
       });
     }
 
-    const {
-      employeeNumber,
-      username,
-      firstName,
-      lastName,
-      email,
-      password,
-    } = req.body;
+    const { employeeNumber, firstName, lastName, email, password } = req.body;
 
     try {
       let user = await User.findOne({
@@ -89,7 +84,6 @@ router.post(
 
       user = new User({
         employeeNumber,
-        username,
         firstName,
         lastName,
         email,
