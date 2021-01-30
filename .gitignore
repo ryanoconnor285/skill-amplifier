@@ -104,3 +104,6 @@ dist
 .tern-port
 config/default.json
 *.default.json
+
+# Uploaded images should not be pushed to github
+uploads
