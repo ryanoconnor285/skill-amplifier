@@ -6,15 +6,37 @@ const PostSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: "users",
   },
-  descShort: {
+  concur: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+    },
+  ],
+  comments: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+      text: {
+        type: String,
+        required: true,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
+  title: {
     type: String,
     required: true,
-    unique: false,
   },
-  descLong: {
+  desc: {
     type: String,
     required: true,
-    unique: false,
   },
   img: {
     data: Buffer,
