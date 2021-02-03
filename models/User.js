@@ -4,8 +4,13 @@ const UserSchema = new mongoose.Schema({
   employeeNumber: {
     type: String,
     required: false,
+    unique: true,
   },
   firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
     type: String,
     required: true,
   },
