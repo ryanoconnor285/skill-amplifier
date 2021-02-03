@@ -1,47 +1,46 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
 const PostSchema = new mongoose.Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "users",
   },
-  concur: [
+  images: [
     {
-      user: {
+      img: {
         type: Schema.Types.ObjectId,
-        ref: "users",
+        ref: "image",
       },
+      comments: [
+        {
+          user: {
+            type: Schema.Types.ObjectId,
+            ref: "users",
+          },
+          title: {
+            type: String,
+            required: true,
+          },
+          description: {
+            type: String,
+            required: true,
+          },
+          concur: [
+            {
+              user: {
+                type: Schema.Types.ObjectId,
+                ref: "users",
+              },
+            },
+          ],
+          date: {
+            type: Date,
+            default: Date.now,
+          },
+        },
+      ],
     },
   ],
-  comments: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "users",
-      },
-      text: {
-        type: String,
-        required: true,
-      },
-      date: {
-        type: Date,
-        default: Date.now,
-      },
-    },
-  ],
-  title: {
-    type: String,
-    required: true,
-  },
-  desc: {
-    type: String,
-    required: true,
-  },
-  img: {
-    data: Buffer,
-    contentType: String,
-  },
   date: {
     type: Date,
     default: Date.now,
