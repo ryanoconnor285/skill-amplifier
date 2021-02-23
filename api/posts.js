@@ -36,13 +36,19 @@ router.post("/", auth, upload.single("tracingImage"), async (req, res) => {
     const user = (await User.findById(req.user.id)).isSelected("-password");
 
     const newPost = new Post({
-      title: req.body.title,
-      desc: req.body.desc,
       user: req.user.id,
-      img: {
-        data: fs.readFileSync(req.file.path),
-        contentType: "image/jpeg",
-      },
+      images: [
+        {
+          img: {
+            data: fs.readFileSync(req.file.path),
+            contentType: "image/jpeg",
+          },
+
+          title: req.body.title,
+          desc: req.body.desc,
+          concur: [],
+        },
+      ],
     });
 
     const post = await newPost.save();
