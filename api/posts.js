@@ -22,43 +22,41 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // @route POST api/posts
-// @desc Upload a post
+// @desc Upload a post with a single image
 // @access Private
-router.post("/", auth, upload.single("tracingImage"), async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errors: errors.array(),
-    });
-  }
+router.post(
+  "/single",
+  auth,
+  upload.single("tracingImage"),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    }
 
-  try {
-    const user = (await User.findById(req.user.id)).isSelected("-password");
-
-    const newPost = new Post({
-      user: req.user.id,
-      images: [
-        {
-          img: {
-            data: fs.readFileSync(req.file.path),
-            contentType: "image/jpeg",
-          },
-
-          title: req.body.title,
-          desc: req.body.desc,
-          concur: [],
+    try {
+      const newPost = new Post({
+        title: req.body.title,
+        description: req.body.description,
+        user: req.user.id,
+        img: {
+          data: fs.readFileSync(req.file.path),
+          contentType: "image/jpeg",
         },
-      ],
-    });
+        concur: [],
+      });
 
-    const post = await newPost.save();
+      const post = await newPost.save();
 
-    res.json(post);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
+      res.json(post);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
   }
-});
+);
 
 // @route GET api/posts
 // @desc Get all posts
