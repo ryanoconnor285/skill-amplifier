@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image")) {
+  if (file && file.mimetype.startsWith("image")) {
     cb(null, true);
   } else {
     cb("Please upload only images.", false);
@@ -56,7 +56,7 @@ const resizeImages = async (req, res, next) => {
 };
 
 const getResult = async (req, res) => {
-  if (req.body.images.length <= 0) {
+  if (req.body.images === undefined || req.body.images.length <= 0) {
     return res.send(`You must select at least 1 image.`);
   }
 
