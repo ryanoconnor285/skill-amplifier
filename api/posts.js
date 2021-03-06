@@ -24,39 +24,44 @@ const upload = multer({ storage: storage });
 // @route POST api/posts
 // @desc Upload a post with a single image
 // @access Private
-router.post(
-  "/single",
-  auth,
-  upload.single("tracingImage"),
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        errors: errors.array(),
-      });
-    }
-
-    try {
-      const newPost = new Post({
-        title: req.body.title,
-        description: req.body.description,
-        user: req.user.id,
-        img: {
-          data: fs.readFileSync(req.file.path),
-          contentType: "image/jpeg",
-        },
-        concur: [],
-      });
-
-      const post = await newPost.save();
-
-      res.json(post);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server Error");
-    }
+router.post("/", auth, upload.single("tracingImage"), async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      errors: errors.array(),
+    });
   }
-);
+  const images = [
+    {
+      img: {
+        data: fs.readFileSync(req.file.path),
+        contentType: "image/jpeg",
+      },
+      comments: [
+        {
+          user: req.user.id,
+          title: req.body.title,
+          description: req.body.description,
+          concur: [],
+        },
+      ],
+    },
+  ];
+
+  try {
+    const newPost = new Post({
+      user: req.user.id,
+      images,
+    });
+
+    const post = await newPost.save();
+
+    res.json(post);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 // @route GET api/posts
 // @desc Get all posts
@@ -71,8 +76,8 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// @route GET api/posts
-// @desc Get all posts
+// @route GET api/posts/:id
+// @desc Get a post with an id
 // @access Private
 router.get("/:id", auth, async (req, res) => {
   try {
@@ -89,7 +94,7 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-// @route DELETE api/posts
+// @route DELETE api/posts/:id
 // @desc Delete a post with ID
 // @access Private
 router.delete("/:id", auth, async (req, res) => {
