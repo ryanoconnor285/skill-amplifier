@@ -15,6 +15,7 @@ import {
 } from "./types";
 
 // Load user
+
 export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
