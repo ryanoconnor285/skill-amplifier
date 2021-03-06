@@ -9,8 +9,8 @@ const PostSchema = new Schema({
   images: [
     {
       img: {
-        type: Schema.Types.ObjectId,
-        ref: "image",
+        data: Buffer,
+        contentType: String,
       },
       comments: [
         {
