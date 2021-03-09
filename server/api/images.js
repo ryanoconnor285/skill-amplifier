@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const uploadController = require("./../controllers/upload");
 
-// @route POST api/uploads
+// @route POST api/images
 // @desc Upload images to a folder on the server
 // @access Private
 router.post(

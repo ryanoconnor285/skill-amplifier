@@ -12,7 +12,7 @@ app.use(express.json({ extended: false, limit: "50mb" }));
 // Define Routes
 app.use("/api/users", require("./api/users"));
 app.use("/api/posts", require("./api/posts"));
-app.use("/api/uploads", require("./api/uploads"));
+app.use("/api/images", require("./api/images"));
 app.use("/api/auth", require("./api/auth"));
 
 const PORT = process.env.PORT || 5001;
