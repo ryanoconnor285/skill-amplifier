@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
@@ -24,7 +25,7 @@ const upload = multer({ storage: storage });
 // @route POST api/posts
 // @desc Upload a post with a single image
 // @access Private
-router.post("/", auth, upload.single("tracingImage"), async (req, res) => {
+router.post("/", auth, upload.single("image"), async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -35,7 +36,7 @@ router.post("/", auth, upload.single("tracingImage"), async (req, res) => {
     {
       img: {
         data: fs.readFileSync(req.file.path),
-        contentType: "image/jpeg",
+        contentType: process.env.CONENT_TYPE,
       },
       comments: [
         {
