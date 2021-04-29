@@ -11,11 +11,16 @@ const PostCard = ({ getPosts, post: { posts, loading } }) => {
     <div>
       {posts.map((post) => (
         <div key={post._id}>
-          <h5>{post.images[0].comments[0].title}</h5>
-          <img
-            src={"data:image/jpeg;base64," + btoa(post.images[0].img.data)}
-            alt={post.images[0].comments[0].title}
-          />
+          {post.images.map((image) => (
+            <div key={image.imageId}>
+              <h5>{image.comments[0].title}</h5>
+              <p>{image.comments[0].description}</p>
+              <img
+                src={`/uploads/` + image.imageId + `.jpeg`}
+                alt={image.comments[0].title}
+              />
+            </div>
+          ))}
         </div>
       ))}
     </div>
