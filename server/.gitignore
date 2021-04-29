@@ -107,3 +107,8 @@ config/default.json
 
 # Uploaded images should not be pushed to github
 uploads
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
