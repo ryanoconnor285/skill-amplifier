@@ -8,9 +8,9 @@ const PostSchema = new Schema({
   },
   images: [
     {
-      img: {
-        data: Buffer,
-        contentType: String,
+      imageId: {
+        type: String,
+        required: true,
       },
       comments: [
         {
