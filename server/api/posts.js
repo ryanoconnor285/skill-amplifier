@@ -1,9 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
-const path = require("path");
-const multer = require("multer");
 const auth = require("../middleware/auth");
 const { check, validationResult } = require("express-validator");
 
@@ -11,48 +8,21 @@ const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
 const Post = require("../models/Post");
 
-//  File Storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
-
 // @route POST api/posts
 // @desc Upload a post with a single image
 // @access Private
-router.post("/", auth, upload.single("image"), async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
       errors: errors.array(),
     });
   }
-  const images = [
-    {
-      img: {
-        data: fs.readFileSync(req.file.path),
-        contentType: process.env.CONENT_TYPE,
-      },
-      comments: [
-        {
-          user: req.user.id,
-          title: req.body.title,
-          description: req.body.description,
-          concur: [],
-        },
-      ],
-    },
-  ];
 
   try {
     const newPost = new Post({
       user: req.user.id,
-      images,
+      images: req.body.images,
     });
 
     const post = await newPost.save();
