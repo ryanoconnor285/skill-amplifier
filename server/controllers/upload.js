@@ -39,16 +39,15 @@ const resizeImages = async (req, res, next) => {
   req.body.images = [];
   await Promise.all(
     req.files.map(async (file) => {
-      const filename = uuidv4();
-      const newFilename = `${filename}-${Date.now()}.jpeg`;
+      const imageId = `${uuidv4()}-${Date.now()}`;
 
       await sharp(file.buffer)
         .resize(640, 320)
         .toFormat("jpeg")
         .jpeg({ quality: 100 })
-        .toFile(`uploads/${newFilename}`);
+        .toFile(`uploads/${imageId}.jpeg`);
 
-      req.body.images.push(newFilename);
+      req.body.images.push(imageId);
     })
   );
 
