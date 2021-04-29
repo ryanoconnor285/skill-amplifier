@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/ryanoconnor285/skill-amplifier#readme",
   "dependencies": {
+    "aws-sdk": "^2.893.0",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.1",
