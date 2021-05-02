@@ -9,3 +9,6 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const GET_ALL_POSTS = "GET_ALL_POSTS";
 export const POST_ERROR = "POST_ERROR";
+export const UPLOAD_IMAGES = "UPLOAD_IMAGES";
+export const GET_IMAGE = "GET_IMAGE";
+export const UPLOAD_ERROR = "UPLOAD_ERROR";
