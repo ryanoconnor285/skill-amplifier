@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Landing from "./pages/landing/landing.page";
 import Dashboard from "./pages/dashboard/dashboard.page";
+import CreatePost from "./pages/createPost/createPost.page";
 import Login from "./pages/login/login.page";
 import Register from "./pages/register/register.page";
 
@@ -33,6 +34,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Landing} />{" "}
           <PrivateRoute exact path="/dashboard" component={Dashboard} />{" "}
+          <PrivateRoute exact path="/create-post" component={CreatePost} />{" "}
           <Route exact path="/login" component={Login} />{" "}
           <Route exact path="/register" component={Register} />{" "}
         </Switch>
