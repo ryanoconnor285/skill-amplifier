@@ -5,9 +5,10 @@ const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
+const generatePassword = require("../utils/generatePassword");
 
 // @route   GET api/users
-// @desc    Test route
+// @desc    Get user with email address
 // @access  Public
 router.get(
   "/",
@@ -51,9 +52,10 @@ router.post(
     check("firstName", "First name is required.").not().isEmpty(),
     check("lastName", "Last name is required").not().isEmpty(),
     check("email", "Please include a valid email").isEmail(),
-    check("password", "Password must be at least 6 characters").isLength({
-      min: 6,
-    }),
+    check(
+      "email",
+      "This service is only available to Orange County Employees"
+    ).contains("@orangecountync.gov"),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -63,7 +65,8 @@ router.post(
       });
     }
 
-    const { employeeNumber, firstName, lastName, email, password } = req.body;
+    const { employeeNumber, firstName, lastName, email } = req.body;
+    const password = generatePassword();
 
     try {
       let user = await User.findOne({
@@ -74,7 +77,8 @@ router.post(
         return res.status(400).json({
           errors: [
             {
-              msg: "User already exists ",
+              msg:
+                "One or more of those credentials are already associated with an account. Try logging in or resetting your password.",
             },
           ],
         });
@@ -100,18 +104,8 @@ router.post(
         },
       };
 
-      jwt.sign(
-        payload,
-        process.env.JWT_SECRET,
-        {
-          expiresIn: 3600,
-        },
-        (err, token) => {
-          if (err) throw err;
-          res.json({
-            token,
-          });
-        }
+      res.send(
+        "Thanks for signing up!! Your login credentials have been sent to your email address."
       );
     } catch (err) {
       console.error(err.message);
