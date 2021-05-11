@@ -98,12 +98,6 @@ router.post(
 
       await user.save();
 
-      const payload = {
-        user: {
-          id: user.id,
-        },
-      };
-
       res.send(
         "Thanks for signing up!! Your login credentials have been sent to your email address."
       );
