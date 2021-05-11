@@ -7,6 +7,7 @@ import CreatePost from "./pages/createPost/createPost.page";
 import Login from "./pages/login/login.page";
 import Register from "./pages/register/register.page";
 
+import DynamicForm from "./components/dynamicForm/dynamicForm.component.jsx";
 import Navbar from "./components/navbar/navbar.component";
 import Alert from "./components/alert/alert.component";
 
@@ -30,6 +31,7 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Navbar />
+        <DynamicForm />
         <Alert />
         <Switch>
           <Route exact path="/" component={Landing} />{" "}
