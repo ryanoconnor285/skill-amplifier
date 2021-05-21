@@ -4,10 +4,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Landing from "./pages/landing/landing.page";
 import Dashboard from "./pages/dashboard/dashboard.page";
 import CreatePost from "./pages/createPost/createPost.page";
+import DailyObservationReport from "./components/dailyObservationReport/dailyObservationReport.component.jsx";
+import PerformanceReport from "./components/performanceReport/performanceReport.component.jsx";
 import Login from "./pages/login/login.page";
 import Register from "./pages/register/register.page";
 
-import DynamicForm from "./components/dynamicForm/dynamicForm.component.jsx";
 import Navbar from "./components/navbar/navbar.component";
 import Alert from "./components/alert/alert.component";
 
@@ -31,12 +32,21 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Navbar />
-        <DynamicForm />
         <Alert />
         <Switch>
           <Route exact path="/" component={Landing} />{" "}
           <PrivateRoute exact path="/dashboard" component={Dashboard} />{" "}
           <PrivateRoute exact path="/create-post" component={CreatePost} />{" "}
+          <PrivateRoute
+            exact
+            path="/daily-observation-report"
+            component={DailyObservationReport}
+          />{" "}
+          <PrivateRoute
+            exact
+            path="/performance-report"
+            component={PerformanceReport}
+          />{" "}
           <Route exact path="/login" component={Login} />{" "}
           <Route exact path="/register" component={Register} />{" "}
         </Switch>
