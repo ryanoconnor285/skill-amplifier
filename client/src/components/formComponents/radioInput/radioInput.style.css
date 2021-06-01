@@ -1,0 +1,24 @@
+:root {
+  --primary: #525252;
+  --seconday: #9f9f9f;
+}
+
+body {
+  font-family: sans-serif;
+  min-height: 100vh;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.rating-input {
+  width: 100%;
+  padding: 1em;
+  color: var(--primary);
+
+  display: grid;
+  grid-gap: 0.5em;
+}
